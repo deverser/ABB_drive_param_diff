@@ -1,6 +1,7 @@
-﻿import os, glob
+﻿import os
 import re
 
+PATH = '.\\Профилактика'
 path_new = '\\Профилактика\\2019\\=JM01E69+DRA01\\=JM01E69+DRA01\\'
 path_old = '\\Профилактика\\2018\\=JM01E69+DRA01\\=JM01E69+DRA01\\'
 file_new = path_new + 'A29_20190219.dwp'
@@ -36,31 +37,23 @@ def write_diff(new_data, old_data, path, file_new, file_old):
 
 
 def walk_through(path):
-    # print(os.path.abspath(path))
-    # print(os.listdir(path))
-    # abspath = os.path.abspath(path)
-    list_dir = [os.path.join(path, dir, PARAM_DIR) for dir in os.listdir(path)]
-    return list_dir
+    file_list = []
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(".dwp"):
+                file_path = os.path.join(root, file)
 
-# def alt_walk(path):
-#     for root, dirs, files in os.walk(path):
-#         for file in files:
-#             file_list = []
-#             if file.endswith('.dwp'):
-#                 file_list.append(file)
-#         # file_list = [file for file in files if file.endswith('.dwp')]
-#                 print(file_list)
+                # file_list.append(file_path)
+    # return file_list
+
+#
+
 
 if __name__ == '__main__':
     # new_param = readfile(file_new)
     # old_param = readfile(file_old)
     # write_diff(new_param, old_param, result, file_new, file_old)
-    param_path_new = walk_through(path_new)
-    for path in param_path_new:
-        os.chdir(path)
-        for file in glob.glob("*.dwp"):
-            print(os.path.join(path, file))
-    param_path_old = walk_through(path_old)
+    print(walk_through(PATH))
 
 
 
